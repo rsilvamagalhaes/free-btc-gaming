@@ -3,34 +3,11 @@ var minstake = 0.00000001;  // valor base
 //-----------------------------------------
 var autorounds = 123;         // n° de rolls
 var valor=$('#balance').text().replace(".", "").replace(/^0+/, '');
+// Quantidade fixa de perda
+var QTDADE_POSSO_PERDER=0.00000080;
 
-//======================================================
-// if (PROFIT > profit_max) {
-//     error_title = "Maximum profit exceeded";
-//     error_info = "Maximum profit: " + number_format(profit_max, devise_decimal);
-//     error_value = "Maximum profit exceeded - Maximum profit: " + number_format(profit_max, devise_decimal);
-//     error = true;
-// } SCRIPT BY Avar valor=$('#balance').text(); UTONOMOENTERPRISE - UNTIL 2019
-// else if (amount > balance) {
-//     error_title = "Bet amount";
-//     error_info = "Maximum bet: " + number_format(balance, devise_decimal);
-//     error_value = "Bet amount - Maximum bet: " + number_format(balance, devise_decimal);
-//     error = true;
-// }
 var handbrake = 0.0001;  // valor lose pause game
 var autoruns = 1;
-// else if (amount > bet_max) {
-//     error_title = "Bet amount";
-//     error_info = "Maximum bet: " + number_format(bet_max, devise_decimal);
-//     error_value = "Bet amount - Maximum bet: " + number_format(bet_max, devise_decimal);
-//     error = true;
-// }
-// else if (amount < bet_min) {
-//     error_title = "Bet amount";
-//     error_info = "Minimum bet: " + number_format(bet_min, devise_decimal);
-//     error_value = "Bet amount - Minimum bet: " + number_format(bet_min, devise_decimal);
-//     error = true;
-// }
 
 function delay(ms) {
     ms += new Date().getTime();
@@ -95,11 +72,19 @@ function checkresults() {
     if (won && !lost) { stake = minstake; console.warn('Jogo num #' + autoruns + '/' + autorounds + ': Ganhei  ' + won + ' Valor: ' + stake.toFixed(8)); }
     if (lost && !won) { stake = lost * 2.1; console.error('Jogo num #' + autoruns + '/' + autorounds + ': Perdi ' + lost + ' Valor: ' + stake.toFixed(8)); }
     if (!won && !lost) { console.log('Something went wrong'); return; }
+
+    // Tratativa para perdas individuais
+    if (lost >= QTDADE_POSSO_PERDER) {
+        console.error('Deu ruim, estou parando por aqui.');
+        console.error('Acabei de perder uma grana no valor de ' + lost + ' satoches ');
+        return;
+    }
+
     document.getElementById('double_your_btc_stake').value = stake.toFixed(8);
     autoruns++;
     if (stake >= handbrake) {
         document.getElementById('handbrakealert').play();
-        console.log('Ganhando ! Executando playnow() novamente');
+        console.log('Deu ruim, estou parando por aqui');
         return;
     }
     delay(1000);
