@@ -4,7 +4,7 @@ var minstake = 0.00000001;  // valor base
 var autorounds = 123;         // n° de rolls
 var valor=$('#balance').text().replace(".", "").replace(/^0+/, '');
 // Quantidade fixa de perda
-var QTDADE_POSSO_PERDER=0.00000080;
+var QTDADE_POSSO_PERDER=0.00000035;
 
 var handbrake = 0.0001;  // valor lose pause game
 var autoruns = 1;
