@@ -1,4 +1,7 @@
 
+4660
+
+
 var minstake = 0.00000001;  // valor base
 //-----------------------------------------
 var autorounds = 123;         // n° de rolls
@@ -6,7 +9,7 @@ var valor=$('#balance').text().replace(".", "").replace(/^0+/, '');
 // Quantidade fixa de perda
 var QTDADE_POSSO_PERDER=0.00000035;
 
-var handbrake = 0.0001;  // valor lose pause game
+var handbrake = 0.00001;  // valor lose pause game
 var autoruns = 1;
 
 function delay(ms) {
@@ -51,7 +54,7 @@ function playnow() {
         } else {
             console.warn('Comecei com o valor de ' + valor);
             console.warn('E agora estou com ' + ultimoValor);
-            console.error('Deu ruim, estou parando aqui, perdi ' + ganhos + ' centavos');
+            console.error('Deu ruim, estou parando aqui, perdi ' + ganhos + ' Sataches');
             return; 
         }
     }
@@ -77,6 +80,14 @@ function checkresults() {
     if (lost >= QTDADE_POSSO_PERDER) {
         console.error('Deu ruim, estou parando por aqui.');
         console.error('Acabei de perder uma grana no valor de ' + lost + ' satoches ');
+
+        var ultimoValor = $('#balance').text().replace(".", "").replace(/^0+/, '');;
+        var ganhos = 0;
+        var ganhos = ultimoValor - valor;
+        console.warn('Comecei com o valor de ' + valor);
+        console.warn('E agora estou com ' + ultimoValor);
+        console.error('Meus ganhos foram ' + ganhos + ' Sataches');        
+
         return;
     }
 
